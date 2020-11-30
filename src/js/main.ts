@@ -14,46 +14,89 @@ const key: keyof typeof sketches = "kintsugi";
 
 class Plotter {
   static registerActions() {
-    const downloadEl = document.getElementById("download");
+    const downloadEl = document.getElementById("download") as HTMLButtonElement;
 
     downloadEl.addEventListener(
       "click",
       (e) => {
         e.preventDefault();
 
+        const fileName = prompt(
+          "File name",
+          `plotter-${new Date().getTime()}.svg`
+        );
+
+        if (fileName == null || fileName == "") {
+          return;
+        }
+
+        downloadEl.disabled = true;
+        downloadEl.innerText = "Saving...";
         const blob = new Blob(
           [paper.project.exportSVG({ asString: true }).toString()],
           { type: "image/svg+xml;charset=utf-8" }
         );
-        FileSaver.saveAs(blob, "plotter.svg", {
+        FileSaver.saveAs(blob, fileName, {
           autoBom: false,
         });
+
+        downloadEl.disabled = false;
+        downloadEl.innerText = "Download";
       },
       false
     );
-    // .onclick = function () {
-    //   console.log("clicked?");
-    //   var fileName = "custom.svg";
-    //   var url =
-    //     "data:image/svg+xml;utf8," +
-    //     encodeURIComponent(
-    //       paper.project.exportSVG({ asString: true }).toString()
-    //     );
-    //   var link = document.createElement("a");
-    //   link.download = fileName;
-    //   link.href = url;
-    //   link.click();
-    // });
   }
+
+  static panCallback(e: MouseEvent) {
+    const canvas = e.target as HTMLCanvasElement;
+    const wWidth = parseInt(canvas.dataset["windowWidth"]);
+    const wHeight = parseInt(canvas.dataset["windowHeight"]);
+    const topScale = parseInt(canvas.dataset["topScale"]);
+
+    const mousePerc = {
+      x: e.clientX / wWidth,
+      y: e.clientY / wHeight,
+    };
+
+    canvas.style.transform = `translate3d(${
+      (1 - mousePerc.x - 0.5) * 100 * topScale
+    }%, ${(1 - mousePerc.y - 0.5) * 100 * topScale}%, 0) scale(${topScale})`;
+  }
+
+  static setupZoom(
+    el: HTMLCanvasElement,
+    zoom: boolean,
+    originalScale: string,
+    topScale = 3.5
+  ) {
+    if (zoom) {
+      el.style.transform = `scale(${topScale})`;
+      el.dataset["windowWidth"] = window.innerWidth.toString();
+      el.dataset["windowHeight"] = window.innerHeight.toString();
+      el.dataset["topScale"] = topScale.toString();
+
+      document.addEventListener("mousemove", Plotter.panCallback);
+    } else {
+      el.style.transform = originalScale;
+      document.removeEventListener("mousemove", Plotter.panCallback);
+    }
+    return zoom;
+  }
+
   static scale(el: HTMLCanvasElement, padding = 20) {
     const { width, height } = el.getBoundingClientRect();
     const portrait = width < height;
 
-    if (portrait) {
-      el.style.transform = `scale(${(window.innerHeight - padding) / height})`;
-    } else {
-      el.style.transform = `scale(${(window.innerWidth - padding) / width})`;
-    }
+    const transform = portrait
+      ? `scale(${(window.innerHeight - padding) / height})`
+      : `scale(${(window.innerWidth - padding) / width})`;
+    let zoomed = false;
+
+    el.style.transform = transform;
+
+    el.addEventListener("dblclick", (e) => {
+      zoomed = Plotter.setupZoom(el, !zoomed, transform);
+    });
   }
 
   static center() {

@@ -43,13 +43,19 @@ export const ditherRaster = (
   }
 };
 
-export function drawDither(img: paper.Raster, scaled: number, inset = 1) {
+export function drawDither(
+  img: paper.Raster,
+  scaled: number,
+  inset = 1,
+  dotSize = 0.5
+) {
   const vectorDither = new paper.Group();
   for (let y = inset; y < img.height - inset; y++) {
     for (let x = inset; x < img.width - inset; x++) {
-      if (img.getPixel(x, y).brightness === 0) {
-        const r = new paper.Path.Rectangle(
-          new paper.Rectangle(x * scaled, y * scaled, scaled, scaled)
+      if (img.getPixel(x, y).brightness !== 1) {
+        const r = new paper.Path.Circle(
+          new paper.Point(x * scaled + scaled / 2, y * scaled + scaled / 2),
+          dotSize
         );
         vectorDither.addChild(r);
       }

@@ -3,6 +3,8 @@
 html,
 body {
   height: 100%;
+
+  font-family: sans-serif;
 }
 
 body.center {
@@ -14,4 +16,16 @@ body.center {
 
 #drawing {
   outline: 1px solid #e5e5e5;
+  image-rendering: pixelated;
+}
+
+.actions {
+  position: fixed;
+
+  bottom: 0;
+  right: 0;
+
+  padding: 10px;
+
+  background-color: rgba(255, 255, 255, 0.5);
 }
