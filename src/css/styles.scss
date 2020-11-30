@@ -1,0 +1,17 @@
+@import "normalize.css";
+
+html,
+body {
+  height: 100%;
+}
+
+body.center {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+#drawing {
+  outline: 1px solid #e5e5e5;
+}
