@@ -3,14 +3,16 @@ import * as FileSaver from "file-saver";
 import paper from "paper/dist/paper-core";
 import lines001Run from "./sketches/lines001";
 import kintsugiRun from "./sketches/kintsugi";
+import spiralRun from "./sketches/spiral";
 import { SketchRun } from "./types";
 
 const sketches: Record<string, SketchRun> = {
   lines001: lines001Run,
   kintsugi: kintsugiRun,
+  spiral: spiralRun,
 };
 
-const key: keyof typeof sketches = "kintsugi";
+const key: keyof typeof sketches = "spiral";
 
 class Plotter {
   static registerActions() {
@@ -83,7 +85,7 @@ class Plotter {
     return zoom;
   }
 
-  static scale(el: HTMLCanvasElement, padding = 20) {
+  static scale(el: HTMLCanvasElement, scaleFactor = 3.5, padding = 20) {
     const { width, height } = el.getBoundingClientRect();
     const portrait = width < height;
 
@@ -95,7 +97,7 @@ class Plotter {
     el.style.transform = transform;
 
     el.addEventListener("dblclick", (e) => {
-      zoomed = Plotter.setupZoom(el, !zoomed, transform);
+      zoomed = Plotter.setupZoom(el, !zoomed, transform, scaleFactor);
     });
   }
 
@@ -109,10 +111,12 @@ class Plotter {
     const el = document.getElementById("drawing") as HTMLCanvasElement;
     paper.setup(el);
 
-    const { center = true, scale = true } = await sketches[key](paper);
+    const { center = true, scale = true, scaleFactor = 3.5 } = await sketches[
+      key
+    ](paper);
 
     if (scale) {
-      Plotter.scale(el);
+      Plotter.scale(el, scaleFactor);
     }
 
     if (center) {
