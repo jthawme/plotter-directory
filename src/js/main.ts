@@ -4,15 +4,21 @@ import paper from "paper/dist/paper-core";
 import lines001Run from "./sketches/lines001";
 import kintsugiRun from "./sketches/kintsugi";
 import spiralRun from "./sketches/spiral";
+import rotateGridRun from "./sketches/rotategrid";
+import rotateGrid2Run from "./sketches/rotategrid2";
+import rotateGrid3Run from "./sketches/rotategrid3";
 import { SketchRun } from "./types";
 
 const sketches: Record<string, SketchRun> = {
   lines001: lines001Run,
   kintsugi: kintsugiRun,
   spiral: spiralRun,
+  rotateGrid: rotateGridRun,
+  rotateGrid2: rotateGrid2Run,
+  rotateGrid3: rotateGrid3Run,
 };
 
-const key: keyof typeof sketches = "spiral";
+const key: keyof typeof sketches = "rotateGrid3";
 
 class Plotter {
   static registerActions() {
@@ -85,7 +91,14 @@ class Plotter {
     return zoom;
   }
 
-  static scale(el: HTMLCanvasElement, scaleFactor = 3.5, padding = 20) {
+  static scale(
+    el: HTMLCanvasElement,
+    scaleFactor = 3.5,
+    padding = 20,
+    addListener = true
+  ) {
+    el.style.transform = "none";
+
     const { width, height } = el.getBoundingClientRect();
     const portrait = width < height;
 
@@ -105,22 +118,53 @@ class Plotter {
     document.body.classList.add("center");
   }
 
+  static setBackground(color: string) {
+    document.body.style.setProperty("--bg-color", color);
+  }
+
+  static registerRegen() {
+    if (!document.body.classList.contains("regen")) {
+      document.body.classList.add("regen");
+      document.addEventListener("keyup", (e) => {
+        if (e.key === " ") {
+          Plotter.run();
+        }
+      });
+    }
+  }
+
   static async run() {
-    Plotter.registerActions();
-
     const el = document.getElementById("drawing") as HTMLCanvasElement;
-    paper.setup(el);
+    const alreadyRan = !!paper.view;
+    if (!alreadyRan) {
+      Plotter.registerActions();
+      paper.setup(el);
+    } else {
+      paper.project.activeLayer.removeChildren();
+    }
 
-    const { center = true, scale = true, scaleFactor = 3.5 } = await sketches[
-      key
-    ](paper);
+    const {
+      center = true,
+      scale = true,
+      scaleFactor = 3.5,
+      backgroundColor,
+      quickRegen,
+    } = await sketches[key](paper);
 
     if (scale) {
-      Plotter.scale(el, scaleFactor);
+      Plotter.scale(el, scaleFactor, 20, !alreadyRan);
     }
 
     if (center) {
       Plotter.center();
+    }
+
+    if (backgroundColor) {
+      Plotter.setBackground(backgroundColor);
+    }
+
+    if (quickRegen) {
+      Plotter.registerRegen();
     }
   }
 }

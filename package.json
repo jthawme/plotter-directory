@@ -10,7 +10,8 @@
     "file-saver": "^2.0.5",
     "normalize.css": "^8.0.1",
     "paper": "^0.12.11",
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "tumult": "^3.0.14"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
