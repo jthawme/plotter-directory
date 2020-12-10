@@ -7,6 +7,7 @@ import spiralRun from "./sketches/spiral";
 import rotateGridRun from "./sketches/rotategrid";
 import rotateGrid2Run from "./sketches/rotategrid2";
 import rotateGrid3Run from "./sketches/rotategrid3";
+import testsheetRun from "./sketches/testsheet";
 import { SketchRun } from "./types";
 
 const sketches: Record<string, SketchRun> = {
@@ -15,10 +16,10 @@ const sketches: Record<string, SketchRun> = {
   spiral: spiralRun,
   rotateGrid: rotateGridRun,
   rotateGrid2: rotateGrid2Run,
-  rotateGrid3: rotateGrid3Run,
+  testsheet: testsheetRun,
 };
 
-const key: keyof typeof sketches = "rotateGrid3";
+const key: keyof typeof sketches = "testsheet";
 
 class Plotter {
   static registerActions() {

@@ -7,3 +7,12 @@ export const colorString = (color: string) => new paper.Color(color);
 export const makeRectangle = (x: number, y: number, w: number, h?: number) => {
   return new paper.Path.Rectangle(point(x, y), size(w, h || w));
 };
+
+export const loadSvg = (file: string, insert = false): Promise<paper.Item> => {
+  return new Promise((resolve, reject) => {
+    paper.project.importSVG(file, {
+      onLoad: (item) => resolve(item),
+      insert,
+    });
+  });
+};
