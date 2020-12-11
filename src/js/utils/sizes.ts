@@ -27,4 +27,46 @@ export const PAPER_SIZE = {
       height: 3508,
     },
   },
+  A5: {
+    72: {
+      width: 420,
+      height: 595,
+    },
+    96: {
+      width: 559,
+      height: 794,
+    },
+    150: {
+      width: 874,
+      height: 1240,
+    },
+    300: {
+      width: 1748,
+      height: 2480,
+    },
+  },
+  A6: {
+    72: {
+      width: 298,
+      height: 420,
+    },
+    96: {
+      width: 397,
+      height: 559,
+    },
+    150: {
+      width: 620,
+      height: 874,
+    },
+    300: {
+      width: 1240,
+      height: 1748,
+    },
+  },
+  A7: {
+    72: { width: 210, height: 298 },
+    96: { width: 280, height: 397 },
+    150: { width: 437, height: 620 },
+    300: { width: 874, height: 1240 },
+  },
 };

@@ -1,25 +1,28 @@
 import * as FileSaver from "file-saver";
 
 import paper from "paper/dist/paper-core";
-import lines001Run from "./sketches/lines001";
-import kintsugiRun from "./sketches/kintsugi";
-import spiralRun from "./sketches/spiral";
-import rotateGridRun from "./sketches/rotategrid";
-import rotateGrid2Run from "./sketches/rotategrid2";
-import rotateGrid3Run from "./sketches/rotategrid3";
-import testsheetRun from "./sketches/testsheet";
+import lines001 from "./sketches/lines001";
+import kintsugi from "./sketches/kintsugi";
+import spiral from "./sketches/spiral";
+import rotateGrid from "./sketches/rotategrid";
+import rotateGrid2 from "./sketches/rotategrid2";
+import rotateGrid3 from "./sketches/rotategrid3";
+import testsheet from "./sketches/testsheet";
+import xmas from "./sketches/xmas";
 import { SketchRun } from "./types";
 
 const sketches: Record<string, SketchRun> = {
-  lines001: lines001Run,
-  kintsugi: kintsugiRun,
-  spiral: spiralRun,
-  rotateGrid: rotateGridRun,
-  rotateGrid2: rotateGrid2Run,
-  testsheet: testsheetRun,
+  lines001,
+  kintsugi,
+  spiral,
+  rotateGrid,
+  rotateGrid2,
+  rotateGrid3,
+  testsheet,
+  xmas,
 };
 
-const key: keyof typeof sketches = "testsheet";
+const key: keyof typeof sketches = "xmas";
 
 class Plotter {
   static registerActions() {
