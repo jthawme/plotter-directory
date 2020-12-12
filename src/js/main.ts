@@ -9,6 +9,7 @@ import rotateGrid2 from "./sketches/rotategrid2";
 import rotateGrid3 from "./sketches/rotategrid3";
 import testsheet from "./sketches/testsheet";
 import xmas from "./sketches/xmas";
+import xmaslayout from "./sketches/xmaslayout";
 import { SketchRun } from "./types";
 
 const sketches: Record<string, SketchRun> = {
@@ -20,9 +21,10 @@ const sketches: Record<string, SketchRun> = {
   rotateGrid3,
   testsheet,
   xmas,
+  xmaslayout,
 };
 
-const key: keyof typeof sketches = "xmas";
+const key: keyof typeof sketches = "xmaslayout";
 
 class Plotter {
   static registerActions() {
@@ -104,11 +106,14 @@ class Plotter {
     el.style.transform = "none";
 
     const { width, height } = el.getBoundingClientRect();
-    const portrait = width < height;
+    const portrait = window.innerWidth < window.innerHeight;
 
-    const transform = portrait
-      ? `scale(${(window.innerHeight - padding) / height})`
-      : `scale(${(window.innerWidth - padding) / width})`;
+    // const transform = portrait
+    //   ? `scale(${(window.innerHeight - padding) / height})`
+    //   : `scale(${(window.innerWidth - padding) / width})`;
+
+    const transform = `scale(${(window.innerHeight - padding) / height})`;
+
     let zoomed = false;
 
     el.style.transform = transform;
