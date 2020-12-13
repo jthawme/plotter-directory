@@ -10,6 +10,7 @@ import rotateGrid3 from "./sketches/rotategrid3";
 import testsheet from "./sketches/testsheet";
 import xmas from "./sketches/xmas";
 import xmaslayout from "./sketches/xmaslayout";
+import tubes from "./sketches/tubes";
 import { SketchRun } from "./types";
 
 const sketches: Record<string, SketchRun> = {
@@ -22,9 +23,10 @@ const sketches: Record<string, SketchRun> = {
   testsheet,
   xmas,
   xmaslayout,
+  tubes,
 };
 
-const key: keyof typeof sketches = "xmaslayout";
+const key: keyof typeof sketches = "tubes";
 
 class Plotter {
   static registerActions() {

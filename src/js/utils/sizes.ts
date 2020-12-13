@@ -9,6 +9,24 @@
 // };
 
 export const PAPER_SIZE = {
+  A3: {
+    72: {
+      width: 842,
+      height: 1191,
+    },
+    96: {
+      width: 1123,
+      height: 1587,
+    },
+    150: {
+      width: 1754,
+      height: 2480,
+    },
+    300: {
+      width: 3508,
+      height: 4960,
+    },
+  },
   A4: {
     72: {
       width: 595,

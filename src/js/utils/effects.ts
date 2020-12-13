@@ -32,3 +32,19 @@ export const halftoneFill = (item: paper.Item, densityDistance: number) => {
 
   return g;
 };
+
+export const cutPaths = (items: Array<paper.PathItem | paper.Path>) => {
+  for (let i = items.length - 1; i >= 0; i--) {
+    const curr = items[i];
+
+    for (let j = i - 1; j >= 0; j--) {
+      const target = items[j];
+
+      if (curr.intersects(target)) {
+        const n = target.subtract(curr);
+        target.replaceWith(n);
+        items.splice(j, 1, n);
+      }
+    }
+  }
+};
