@@ -11,6 +11,8 @@ import testsheet from "./sketches/testsheet";
 import xmas from "./sketches/xmas";
 import xmaslayout from "./sketches/xmaslayout";
 import tubes from "./sketches/tubes";
+import sharedlines from "./sketches/sharedlines";
+import infallible from "./sketches/infallible";
 import { SketchRun } from "./types";
 
 const sketches: Record<string, SketchRun> = {
@@ -24,9 +26,11 @@ const sketches: Record<string, SketchRun> = {
   xmas,
   xmaslayout,
   tubes,
+  sharedlines,
+  infallible,
 };
 
-const key: keyof typeof sketches = "tubes";
+const key: keyof typeof sketches = "spiral";
 
 class Plotter {
   static registerActions() {

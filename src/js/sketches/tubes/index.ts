@@ -61,7 +61,7 @@ async function run(paper: paper.PaperScope): SketchRunOptions {
   const w: SizeMod = (perc) => perc * drawingArea.width;
   const h: SizeMod = (perc) => perc * drawingArea.height;
 
-  const lines: Array<paper.Path | paper.PathItem> = new Array(8)
+  const lines: Array<paper.Path | paper.PathItem> = new Array(6)
     .fill(0)
     .map(() => {
       const p = new paper.CompoundPath({
